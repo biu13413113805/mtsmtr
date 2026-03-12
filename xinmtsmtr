@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芒特省 · 官方中转站 | MTS</title>
+    <!-- 图标和字体 -->
+    <link rel="icon" type="image/png" href="mtslogo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(145deg, #f0f5fa 0%, #e9f0f7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            color: #1e2b3c;
+            position: relative;
+        }
+
+        /* 微妙的背景纹理 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 30%, rgba(59, 91, 129, 0.03) 0%, transparent 20%),
+                              radial-gradient(circle at 80% 70%, rgba(42, 87, 141, 0.03) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 48px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 30px 60px -20px rgba(0, 30, 60, 0.3),
+                        0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+                        0 0 0 2px rgba(59, 91, 129, 0.1) inset;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        /* 顶部装饰 */
+        .header-decoration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .header-decoration .line {
+            height: 2px;
+            width: 60px;
+            background: linear-gradient(90deg, transparent, #8aa9c9, #4b6f94, #8aa9c9, transparent);
+            border-radius: 2px;
+        }
+
+        .header-decoration i {
+            color: #4b6f94;
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+
+        /* Logo 区域 */
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2.2rem;
+        }
+
+        .logo-wrapper {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 30px -10px rgba(31, 66, 99, 0.3),
+                        0 0 0 1px rgba(255,255,255,0.8) inset,
+                        0 0 0 3px rgba(75, 111, 148, 0.2);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .logo-wrapper img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        /* 如果没有logo图片则显示文字占位 */
+        .logo-wrapper.fallback {
+            background: linear-gradient(145deg, #1e3b5c, #2b4d73);
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e3b5c, #2d577b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h1 i {
+            background: linear-gradient(135deg, #1e3b5c, #2d577b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.2rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #5f7392;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            border: 1px solid rgba(75, 111, 148, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+
+        .subtitle i {
+            color: #4b6f94;
+            font-size: 0.9rem;
+        }
+
+        /* 卡片网格 */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.8rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .link-card {
+            background: white;
+            border-radius: 32px;
+            padding: 2rem 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: all 0.25s ease;
+            border: 1px solid #e1ebf5;
+            box-shadow: 0 15px 30px -15px rgba(0, 30, 60, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #1e3b5c, #4b6f94, #8aa9c9);
+            opacity: 0.7;
+        }
+
+        .link-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 40px -15px #1e3b5c80;
+            border-color: #b3c9e0;
+            background: #ffffff;
+        }
+
+        .link-card:active {
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #f0f7ff, #e1ecf9);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: #1e3b5c;
+            font-size: 2rem;
+            border: 1px solid rgba(75, 111, 148, 0.2);
+        }
+
+        .link-card h2 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: #1e2b3c;
+        }
+
+        .link-card p {
+            font-size: 0.95rem;
+            color: #5f7392;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .link-arrow {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #1e3b5c;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: gap 0.2s;
+            margin-top: auto;
+        }
+
+        .link-card:hover .link-arrow {
+            gap: 0.8rem;
+            color: #2d577b;
+        }
+
+        .link-arrow i {
+            font-size: 0.9rem;
+        }
+
+        /* 底部信息 */
+        .footer-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed rgba(75, 111, 148, 0.3);
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #4b6f94;
+            font-size: 0.9rem;
+        }
+
+        .trust-badge i {
+            font-size: 1.2rem;
+        }
+
+        .update-time {
+            color: #7c8fa8;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem 1.5rem;
+                border-radius: 32px;
+            }
+            h1 {
+                font-size: 2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .logo-wrapper {
+                width: 80px;
+                height: 80px;
+            }
+            .link-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* 如果favicon不存在，忽略 */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部装饰线 -->
+        <div class="header-decoration">
+            <span class="line"></span>
+            <i class="fas fa-shield-alt"></i>
+            <span class="line"></span>
+        </div>
+
+        <!-- Logo 与标题 -->
+        <div class="logo-section">
+            <div class="logo-wrapper" id="logoWrapper">
+                <!-- 尝试加载logo图片，如果失败显示文字 -->
+                <img src="mtslogo.png" alt="芒特省徽标" onerror="this.style.display='none'; this.parentElement.classList.add('fallback'); this.parentElement.innerHTML='MTS';">
+            </div>
+            <h1>
+                <i class="fas fa-map-signal"></i> 
+                芒特省·中转站
+            </h1>
+            <div class="subtitle">
+                <i class="fas fa-check-circle"></i> 官方服务通道 · 安全可信
+            </div>
+        </div>
+
+        <!-- 主要服务卡片 -->
+        <div class="links-grid">
+            <!-- 卡片1: 内群审核 -->
+            <a href="https://wj.qq.com/s2/24858165/7ca1/" class="link-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h2>内群审核</h2>
+                <p>内部群组入群资格审核，请按要求填写信息，等待管理员处理。</p>
+                <span class="link-arrow">
+                    进入通道 <i class="fas fa-arrow-right"></i>
+                </span>
+            </a>
+
+            <!-- 卡片2: 管理员申请审核 -->
+            <a href="https://wj.qq.com/s2/25890484/1ce1/" class="link-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h2>管理员申请</h2>
+                <p>申请成为芒特省管理员，提交资质与意向，我们将尽快审核。</p>
+                <span class="link-arrow">
+                    进入通道 <i class="fas fa-arrow-right"></i>
+                </span>
+            </a>
+
+            <!-- 卡片3: 官方网站 -->
+            <a href="https://cunchengmtr.cloud/home" class="link-card" target="_blank" rel="noopener noreferrer">
+                <div class="card-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h2>芒特省官网</h2>
+                <p>访问芒特省官方网站，了解最新动态、政策与服务。</p>
+                <span class="link-arrow">
+                    进入官网 <i class="fas fa-arrow-right"></i>
+                </span>
+            </a>
+        </div>
+
+        <!-- 底部信息 -->
+        <div class="footer-info">
+            <div class="trust-badge">
+                <i class="fas fa-certificate"></i>
+                <span>芒特省官方认证 · 数据加密传输</span>
+            </div>
+            <div class="update-time">
+                <i class="far fa-clock"></i>
+                <span>2025年3月 · 服务稳定运行</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 小脚本：处理logo占位 -->
+    <script>
+        (function() {
+            const logoWrapper = document.getElementById('logoWrapper');
+            const img = logoWrapper.querySelector('img');
+            if (img && img.complete && img.naturalHeight === 0) {
+                // 如果图片已加载但失败
+                img.style.display = 'none';
+                logoWrapper.classList.add('fallback');
+                logoWrapper.innerHTML = 'MTS';
+            }
+        })();
+    </script>
+</body>
+</html>
